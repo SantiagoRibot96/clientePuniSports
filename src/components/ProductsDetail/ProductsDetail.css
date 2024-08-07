@@ -1,0 +1,26 @@
+.container {
+    background-color: #fff3dc;
+    text-align: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 40vw;
+    padding: 1rem;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+}
+
+.agregarCarrito {
+    width: 30vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

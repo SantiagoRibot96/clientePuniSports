@@ -1,0 +1,20 @@
+.centrado ul{
+    flex-direction: row;
+    width: 30vw;
+    justify-content: end;
+    align-items: center;
+}
+
+.centrado ul li{
+    margin-left: 0.5rem;
+}
+
+.navbar{
+    border-bottom: 3px solid black;
+    margin-bottom: 1rem;
+}
+
+.fuenteGrande{
+    font-size: 2rem;
+    font-weight: 700;
+}

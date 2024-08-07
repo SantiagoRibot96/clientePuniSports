@@ -1,0 +1,23 @@
+.contador {
+    border: 3px solid black;
+}
+
+.btn-outline-primary {
+    width: 40px;
+    height: 35px;
+    padding: 1px;
+}
+
+.centrar {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.cont {
+    width: 40px;
+}
+
+.btn-primary {
+    margin-top: 0;
+}
