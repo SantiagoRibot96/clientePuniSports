@@ -59,7 +59,7 @@ const Count = ({stock, pid, status}) => {
                 <p className="cont"> {contador} </p>
                 <button onClick={sumarContador} className="btn btn-outline-primary"> + </button>
             </div>
-            {(stock - quantity > 0 && status && isLoggedIn) ? (<button className='btn btn-primary' onClick={comprarHandler}> Comprar </button>) : (<button className='btn btn-outline-secondary' disabled> Comprar </button>)}
+            {(stock - quantity > 0 && status && isLoggedIn && user.rol === "user") ? (<button className='btn btn-primary' onClick={comprarHandler}> Comprar </button>) : (<button className='btn btn-outline-secondary' disabled> Comprar </button>)}
         </div>
     </>
   )

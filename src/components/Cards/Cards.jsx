@@ -17,6 +17,7 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
       data => console.log(data)
     ).catch(error => console.log(error));
 
+    navigate("/");
   }
 
   const actualizarProducto = () => {
@@ -32,6 +33,7 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
             <h5 className='card-title'>{title}</h5>
             <p className='card-text'>{description}</p>
             <p className='card-text'>${price}.-</p>
+            <p className='card-text'>Owner: <strong>{owner}</strong></p>
             {status ? (<p className='card-text'>Stock: <strong>{stock}</strong></p>) : (<p className='card-text'>Sin Stock</p>)}
             <>
               <form onSubmit={eliminarProducto}>
@@ -52,6 +54,7 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
             <h5 className='card-title'>{title}</h5>
             <p className='card-text'>{description}</p>
             <p className='card-text'>${price}.-</p>
+            <p className='card-text'>Owner: {owner}</p>
             {status ? (<p className='card-text'>Stock: <strong>{stock}</strong></p>) : (<p className='card-text'>Sin Stock</p>)}
             <>
               <form onSubmit={eliminarProducto}>

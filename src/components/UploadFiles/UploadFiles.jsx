@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { SessionContext } from '../../context/SessionContext';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const UploadFiles = () => {
     const [file0, setFile0] = useState(null);
     const [file1, setFile1] = useState(null);
     const [file2, setFile2] = useState(null);
     const { user } = useContext(SessionContext);
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -27,6 +30,7 @@ const UploadFiles = () => {
 
             if (result.ok) {
                 console.log(result.message);
+                navigate("/")
             } else {
                 console.error('Error en la respuesta del servidor:', result.message);
             }

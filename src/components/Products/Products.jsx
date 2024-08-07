@@ -32,8 +32,8 @@ const Products = (rol) => {
     ).catch(error => console.log(error));
   }, []);
 
-  const changeNextPage = () => {
-    fetch(nextLink).then(
+  const changeNextPage = async () => {
+    await fetch(nextLink).then(
       response => response.json()
     ).then(
       data => {
