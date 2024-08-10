@@ -9,6 +9,7 @@ function Register() {
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
   const [ edad, setEdad ] = useState();
+  const [ errorMessage, setErrorMessage ] = useState("");
 
   const navigate = useNavigate();
   const { updateSession } = useContext(SessionContext);
@@ -24,24 +25,30 @@ function Register() {
       email
     }
 
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
-      method: "POST", 
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newUser),
-      credentials: 'include'
-    });
-
-    const result = await response.json();
-
-    if(result.ok){
-      console.log(result.message);
-      updateSession(result.isLogged, result.payload);
-      navigate("/");
-    }else{
-      console.log(result.error);
-      updateSession(result.isLogged, "");
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
+        method: "POST", 
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newUser),
+        credentials: 'include'
+      });
+  
+      const result = await response.json();
+  
+      if(result.ok){
+        console.log(result.message);
+        updateSession(result.isLogged, result.payload);
+        navigate("/");
+      }else{
+        console.log(result.error);
+        updateSession(result.isLogged, "");
+        setErrorMessage(result.error);
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(error);
     }
   }
   return (
@@ -70,6 +77,7 @@ function Register() {
           <button className="btn btn-primary" type="submit"> Registrarse </button>
         </div>
       </form>
+      {errorMessage ? <p className='error'>{errorMessage}</p> : <></>}
     </>
   )
 }

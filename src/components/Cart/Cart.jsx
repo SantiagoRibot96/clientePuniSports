@@ -4,6 +4,7 @@ import './Cart.css'
 import { useNavigate, Link } from "react-router-dom";
 const Cart = () => {
     const [productos, setProductos] = useState([]);
+    const [ errorMessage, setErrorMessage ] = useState("");
     const { user } = useContext(SessionContext);
     const navigate = useNavigate();
 
@@ -18,7 +19,8 @@ const Cart = () => {
           data => {
             setProductos(data.payload);
           }
-      ).catch(error => console.log(error));
+      ).catch((error) => {
+        console.log(error)});
     }
 
     const quitarProducto = (pid) => {
@@ -28,7 +30,9 @@ const Cart = () => {
         data => {
           fetchProducts();
         }
-      ).catch(error=> console.log(error));
+      ).catch((error) => {
+        console.log(error)
+        setErrorMessage(error)});
     }
 
     return (
@@ -42,7 +46,7 @@ const Cart = () => {
                 <p className='card-text'>Precio: ${element.product.price}.-</p>
                 <p className='card-text'>Cantidad: {element.quantity}</p>
                 <p className='card-text'><strong>Total: ${element.product.price * element.quantity}.-</strong></p>
-                <button className='btn btn-danger' onClick={() => quitarProducto(element.product._id)}>Quitar</button>
+                {!errorMessage ? <button className='btn btn-danger' onClick={() => quitarProducto(element.product._id)}>Quitar</button> : <p className="error">{errorMessage}</p>}
               </div>
             </div>
           ))}

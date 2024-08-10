@@ -12,6 +12,7 @@ const UpdateProducts = () => {
   const [code, setCode] = useState("");
   const [stock, setStock] = useState("");
   const [status, setStatus] = useState("");
+  const [ errorMessage, setErrorMessage ] = useState("");
   const { pid } = useParams();
   
   const navigate = useNavigate();
@@ -23,7 +24,10 @@ const UpdateProducts = () => {
         data => {
             setProducto(data.payload);
         }
-    ).catch(error => console.log(error));
+    ).catch((error) => {
+      console.log(error);
+      setErrorMessage(error);
+    });
   }, [pid]);
 
   const formHandler = async (e) => {
@@ -40,22 +44,28 @@ const UpdateProducts = () => {
       status: status === "" ? producto.status : (status === "true" ? true : false)
     }
 
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/products/${pid}`, {
-      method: "POST", 
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newProduct),
-      credentials: 'include'
-    });
-
-    const result = await response.json();
-
-    if(result.ok){
-      console.log(result.message);
-      navigate("/");
-    }else{
-      console.log(result.error);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/products/${pid}`, {
+        method: "POST", 
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newProduct),
+        credentials: 'include'
+      });
+  
+      const result = await response.json();
+  
+      if(result.ok){
+        console.log(result.message);
+        navigate("/");
+      }else{
+        console.log(result.error);
+        setErrorMessage(result.error);
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(error);
     }
   }
 
@@ -103,6 +113,7 @@ const UpdateProducts = () => {
           <button className="btn btn-primary" type="submit"> Actualizar Producto </button>
         </div>
       </form>
+      {errorMessage ? <p className='error'>{errorMessage}</p> : <></>}
     </>
   )
 }

@@ -30,3 +30,8 @@
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
+.error {
+    color: red;
+    font-size: small;
+}

@@ -7,7 +7,7 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
 
   const navigate = useNavigate();
   const { user } = useContext(SessionContext);
-  const { errorMessage, setErrorMessage } = useState("");
+  const [ errorMessage, setErrorMessage ] = useState("");
   
   const eliminarProducto = (e) => {
     e.preventDefault();

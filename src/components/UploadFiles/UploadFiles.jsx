@@ -7,6 +7,7 @@ const UploadFiles = () => {
     const [file0, setFile0] = useState(null);
     const [file1, setFile1] = useState(null);
     const [file2, setFile2] = useState(null);
+    const [ errorMessage, setErrorMessage ] = useState("");
     const { user } = useContext(SessionContext);
 
     const navigate = useNavigate();
@@ -33,14 +34,14 @@ const UploadFiles = () => {
                 navigate("/")
             } else {
                 console.error('Error en la respuesta del servidor:', result.message);
+                setErrorMessage(result.message);
             }
             
         } catch (error) {
             console.error('Error al subir el archivo:', error);
+            setErrorMessage(error);
         }
     };
-
-    console.log(user.documentOk);
     
     return (
         <>
@@ -57,6 +58,7 @@ const UploadFiles = () => {
                 </form>
             </div>
         }
+        {errorMessage ? <p className='error'> {errorMessage} </p> : <></>}
         </>
     );
 };

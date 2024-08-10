@@ -5,6 +5,7 @@ const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
+  const [ errorMessage, setErrorMessage ] = useState("");
 
   const { mail } = useParams();
   const navigate = useNavigate();
@@ -12,19 +13,26 @@ const ResetPassword = () => {
   const resetPassword = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/requestPasswordReset`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'}, 
-      body: JSON.stringify({email})});
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/requestPasswordReset`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify({email})});
+  
+        const result = await response.json();
+  
+        if(result.ok) {
+          console.log(result.message);
+          navigate("/");
+        }else{
+          console.log(result.error);
+          setErrorMessage(result.error);
+        }
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(error);
+    }
 
-      const result = await response.json();
-
-      if(result.ok) {
-        console.log(result.message);
-        navigate("/");
-      }else{
-        console.log(result.error);
-      }
   }
 
   const changePassword = async (e) => {
@@ -36,18 +44,23 @@ const ResetPassword = () => {
       password
     }
 
-    const response = await  fetch(`${process.env.REACT_APP_API_URL}/users/reset-password`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'}, 
-      body: JSON.stringify(sent)});
-
-      const result = await response.json();
-
-      if(result.ok) {
-        console.log(result.message);
-      }else{
-        console.log(result.error);
-      }
+    try {
+      const response = await  fetch(`${process.env.REACT_APP_API_URL}/users/reset-password`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify(sent)});
+  
+        const result = await response.json();
+  
+        if(result.ok) {
+          console.log(result.message);
+        }else{
+          console.log(result.error);
+        }
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(error);
+    }
   }
   return (
     <>
@@ -67,6 +80,7 @@ const ResetPassword = () => {
           <button className='btn btn-primary' type='submit'>Cambiar</button>
         </form>  
       </div>}
+      {errorMessage ? <p className='error'>{errorMessage}</p> : <></>}
     </>
   )
 }

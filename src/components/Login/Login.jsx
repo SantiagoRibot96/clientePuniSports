@@ -7,6 +7,7 @@ const Login = () => {
   const [formData, setFormData] = useState({email: '', password: ''});
   const { updateSession } = useContext(SessionContext);
   const navigate = useNavigate();
+  const [ errorMessage, setErrorMessage ] = useState("");
 
   const handleChange = (e) => {
     const {name, value} = e.target;
@@ -39,6 +40,7 @@ const Login = () => {
         }
     } catch (error) {
       console.log("nok");
+      setErrorMessage(error);
     }
 
     navigate('/');
@@ -75,6 +77,7 @@ const Login = () => {
         <input type="password" name='password' value={formData.password} onChange={handleChange} required />
         <button className='btn btn-primary' type='submit'>Iniciar </button>
         <Link to="/reset-password">Olvidaste tu contraseña?</Link>
+        {errorMessage ? <p className='error'>{errorMessage}</p> : <p></p>}
       </form>
 
       <Link className='btn btn-primary' to="/registrarse">Registrarse!</Link>

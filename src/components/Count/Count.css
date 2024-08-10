@@ -21,3 +21,8 @@
 .btn-primary {
     margin-top: 0;
 }
+
+.error {
+    color: red;
+    font-size: small;
+}

@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { SessionContext } from '../../context/SessionContext';
 import { useNavigate, Link } from 'react-router-dom';
 import Users from '../Users/Users';
@@ -6,6 +6,7 @@ import Users from '../Users/Users';
 const Profile = () => {
   const { isLoggedIn, user, updateSession } = useContext(SessionContext);
   const navigate = useNavigate();
+  const [ errorMessage, setErrorMessage ] = useState("");
 
   const logout = async() => {
     try {
@@ -24,11 +25,13 @@ const Profile = () => {
       }else{
         console.log(result.error);
         updateSession(result.isLogged, "");
+        setErrorMessage(result.error);
       }
   
       navigate('/');
     } catch (error) {
       console.log(error);
+      setErrorMessage(error);
     }
   }
   
@@ -41,7 +44,7 @@ const Profile = () => {
           <p>Email: {user.email}</p>
           <p>Edad: {user.age}</p>
           <p>Rol: <strong>{user.rol}</strong></p>
-          <button className="btn btn-primary" onClick={logout}>Cerrar sesion</button>
+          {!errorMessage ? <button className="btn btn-primary" onClick={logout}>Cerrar sesion</button> : <p className='error'>{errorMessage}</p>}
           <Link to="/reset-password">Cambiar contraseña </Link>
         </div> :
         <div>

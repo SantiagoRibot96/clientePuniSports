@@ -14,6 +14,7 @@ const newProduct = () => {
   const [stock, setStock] = useState("");
   const [status, setStatus] = useState("");
   const { user } = useContext(SessionContext);
+  const [ errorMessage, setErrorMessage ] = useState("");
   
   const navigate = useNavigate();
 
@@ -31,25 +32,29 @@ const newProduct = () => {
       status: status === "true" ? true : false,
       owner: user.rol === "admin" ? "admin" : user._id
     }
-
-    console.log(newProduct);
     
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/products`, {
-      method: "POST", 
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newProduct),
-      credentials: 'include'
-    });
-
-    const result = await response.json();
-
-    if(result.ok){
-      console.log(result.message);
-      navigate("/");
-    }else{
-      console.log(result.error);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/products`, {
+        method: "POST", 
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newProduct),
+        credentials: 'include'
+      });
+  
+      const result = await response.json();
+  
+      if(result.ok){
+        console.log(result.message);
+        navigate("/");
+      }else{
+        console.log(result.error);
+        setErrorMessage(result.error);
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(error);
     }
   }
 
@@ -93,7 +98,7 @@ const newProduct = () => {
         <div className='container'>
           <label htmlFor="stock"><strong>Stock:</strong></label>
           <input type="text" name="stock" onChange={(e) => setStock(e.target.value)} value={stock} required/>
-          <button className="btn btn-primary" type="submit"> Cargar </button>
+          {!errorMessage ? <button className="btn btn-primary" type="submit"> Cargar </button> : <p className='error'>{errorMessage}</p>}
         </div>
       </form>
     </>

@@ -7,8 +7,8 @@ const Ticket = () => {
     const [payload, setPayload] = useState({});
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState(``);
-    const [error, setError] = useState(null);
     const [flag, setFlag] = useState(false);
+    const [ errorMessage, setErrorMessage ] = useState("");
     let hasFetched = false
 
     const comprarProductos = async () => {
@@ -32,7 +32,7 @@ const Ticket = () => {
             setMessage(data.message);
             setFlag(data.flag);
         } catch (error) {
-            setError(error.message);
+            setErrorMessage(error);
         } finally {
             setLoading(false);
         }
@@ -49,10 +49,6 @@ const Ticket = () => {
         return <p>Loading...</p>;
     }
 
-    if (error) {
-        return <p>Error: {error}</p>;
-    }
-
     return (
         <>
             <p>Gracias por su compra! Se ha enviado un mail a su casilla asociada</p>
@@ -65,6 +61,7 @@ const Ticket = () => {
                 <p>No se pudo generar el ticket. Por favor, inténtelo de nuevo más tarde.</p>
             )}
             <p>En caso de no recibir el mail contactese con el nuemro de ticket al <strong>11-2220-4493</strong></p>
+            {errorMessage ? <p>{errorMessage}</p> : <></>}
         </>
     );
 };

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Logout = () => {
   const { updateSession } = useContext(SessionContext);
   const navigate = useNavigate();
+  const [ errorMessage, setErrorMessage ] = useState("");
 
   const logout = async() => {
     try {
@@ -28,10 +29,13 @@ const Logout = () => {
       navigate('/');
     } catch (error) {
       console.log(error);
+      setErrorMessage(error);
     }
   }
   return (
-    <><button className="btn btn-primary" onClick={logout}>Salir</button></>
+    <>
+      {!errorMessage ? <button className="btn btn-primary" onClick={logout}>Salir</button> : <p className="error">{errorMessage}</p>}
+    </>
   )
 }
 

@@ -14,6 +14,7 @@ const Products = (rol) => {
   const [prevLink, setPrevLink] = useState();
   const [nextLink, setNextLink] = useState();
   const { user } = useContext(SessionContext);
+  const [ errorMessage, setErrorMessage ] = useState("");
   
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/products`).then(
@@ -29,7 +30,10 @@ const Products = (rol) => {
         setPrevLink(data.prevLink);
         setNextLink(data.nextLink);
       }
-    ).catch(error => console.log(error));
+    ).catch((error) => {
+      console.log(error);
+      setErrorMessage(error);
+    });
   }, []);
 
   const changeNextPage = async () => {
@@ -46,7 +50,10 @@ const Products = (rol) => {
         setPrevLink(data.prevLink);
         setNextLink(data.nextLink);
       }
-    ).catch(error => console.log(error));
+    ).catch((error) => {
+      console.log(error);
+      setErrorMessage(error);
+    });
   }
 
   const changePrevPage = () => {
@@ -63,7 +70,10 @@ const Products = (rol) => {
         setPrevLink(data.prevLink);
         setNextLink(data.nextLink);
       }
-    ).catch(error => console.log(error));
+    ).catch((error) => {
+      console.log(error);
+      setErrorMessage(error);
+    });
   }
 
   return (
@@ -74,7 +84,7 @@ const Products = (rol) => {
         ))}
       </div>
 
-      <div className='contenedor'>
+      {errorMessage ? <div className='contenedor'>
         <div className='contenedor2'>
           {firstPage ? <button className='btn btn-secondary' disabled> Anterior </button> : <></>}
           {hasPrevPage ? <button className='btn btn-secondary' onClick={changePrevPage}> Anterior </button> : <></>}
@@ -83,7 +93,7 @@ const Products = (rol) => {
         </div>
         <p>Pagina {currentPage} de {totalPages}</p>
         {rol.rol ? <Link className='btn btn-primary' to="/newProduct">Cargar Producto</Link> : <></>}
-      </div>
+      </div> : <p className='error'>{errorMessage}</p>}
     </>
   )
 }

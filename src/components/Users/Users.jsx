@@ -6,8 +6,7 @@ const Users = () => {
     const [ payload, setPayload ] = useState([]);
     const [ roles, setRoles ] = useState({});
     const [ messages, setMessages ] = useState({});
-
-    let flag = false;
+    const [ errorMessage, setErrorMessage ] = useState("");
 
     const fetchUsers = async() => {
         try {
@@ -26,9 +25,11 @@ const Users = () => {
                 flag = true;
             }else{
                 console.log(result.error);
+                setErrorMessage(result.error)
             }
         } catch (error) {
             console.log(error);
+            setErrorMessage(error)
         }
     }
 
@@ -46,59 +47,79 @@ const Users = () => {
     const handleFormSubmit = async (e, id, email) => {
         e.preventDefault();
         
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${roles[id]}/${email}`);
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${roles[id]}/${email}`);
     
-        const result = await response.json();
-    
-        if(result.ok) {
-            console.log(result.message);
-            console.log('Rol actualizado para usuario', id, 'a', roles[id]);
-            fetchUsers();
-        }else{
-            console.log(result.error);
+            const result = await response.json();
+        
+            if(result.ok) {
+                console.log(result.message);
+                console.log('Rol actualizado para usuario', id, 'a', roles[id]);
+                fetchUsers();
+            }else{
+                console.log(result.error);
+                setErrorMessage(result.error)
+            }
+        } catch (error) {
+            console.log(error);
+            setErrorMessage(error);
         }
     };
 
     const resetPassword = async (e, email, id) => {
         e.preventDefault();
     
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/users/requestPasswordReset`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'}, 
-        body: JSON.stringify({email})});
-    
-        const result = await response.json();
-    
-        if(result.ok) {
-            setMessages(prevRoles => ({
-                ...prevRoles,
-                [id]: result.message
-            }));
-            console.log(result.message);
-        }else{
-            console.log(result.error);
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/users/requestPasswordReset`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify({email})});
+            
+                const result = await response.json();
+            
+                if(result.ok) {
+                    setMessages(prevRoles => ({
+                        ...prevRoles,
+                        [id]: result.message
+                    }));
+                    console.log(result.message);
+                }else{
+                    console.log(result.error);
+                    setErrorMessage(result.error);
+                }
+        } catch (error) {
+            console.log(error);
+            setErrorMessage(error)
         }
+
     }
 
     const deleteAccount = async (e, email, id) => {
         e.preventDefault();
 
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
-        method: 'DELETE',
-        headers: {'Content-Type': 'application/json'}, 
-        body: JSON.stringify({email})});
-    
-        const result = await response.json();
-    
-        if(result.ok) {
-            setMessages(prevRoles => ({
-                ...prevRoles,
-                [id]: result.message
-            }));
-            console.log(result.message);
-        }else{
-            console.log(result.error);
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify({email})});
+            
+                const result = await response.json();
+            
+                if(result.ok) {
+                    setMessages(prevRoles => ({
+                        ...prevRoles,
+                        [id]: result.message
+                    }));
+                    console.log(result.message);
+                }else{
+                    console.log(result.error);
+                    setErrorMessage(result.error);
+                }
+        } catch (error) {
+            console.log(error);
+            setErrorMessage(error);
         }
+
     }
 
     return (
@@ -141,6 +162,7 @@ const Users = () => {
                 ))}
             </tbody>
         </table>
+        {errorMessage ? <p className='error'>{errorMessage}</p> : <></>}
         </>
     )
 }

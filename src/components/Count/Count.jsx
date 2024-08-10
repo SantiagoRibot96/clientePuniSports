@@ -8,6 +8,7 @@ const Count = ({stock, pid, status}) => {
     const [quantity, setQuantity] = useState(1);
     const { user, isLoggedIn } = useContext(SessionContext);
     const navigate = useNavigate();
+    const [ errorMessage, setErrorMessage ] = useState("");
 
     const sumarContador = () => {
         if(contador < stock - quantity) {
@@ -48,11 +49,15 @@ const Count = ({stock, pid, status}) => {
                 console.log(data.payload);
                 navigate("/");
             }
-        ).catch(error => console.log(error));
+        ).catch((error) => {
+            console.log(error);
+            setErrorMessage(error);
+        });
     }
 
   return (
     <>
+        {!errorMessage ?
         <div className="container-flex">
             <div className="centrar">
                 <button onClick={restarContador} className="btn btn-outline-primary"> - </button>
@@ -60,7 +65,7 @@ const Count = ({stock, pid, status}) => {
                 <button onClick={sumarContador} className="btn btn-outline-primary"> + </button>
             </div>
             {(stock - quantity > 0 && status && isLoggedIn && user.rol === "user") ? (<button className='btn btn-primary' onClick={comprarHandler}> Comprar </button>) : (<button className='btn btn-outline-secondary' disabled> Comprar </button>)}
-        </div>
+        </div> : <p className="error">{errorMessage}</p>}
     </>
   )
 }
