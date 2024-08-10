@@ -9,6 +9,8 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
   const { user } = useContext(SessionContext);
   const { error, setError } = useState("");
   
+  console.log(error);
+  
   const eliminarProducto = (e) => {
     e.preventDefault();
 
