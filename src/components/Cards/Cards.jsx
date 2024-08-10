@@ -1,13 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import './Cards.css';
 import { SessionContext } from '../../context/SessionContext';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 const Item = ({owner, thumbnail, title, price, stock, _id, description, status, rol, misProductos}) => {
 
   const navigate = useNavigate();
   const { user } = useContext(SessionContext);
-
+  const { error, setError } = useState("");
+  
   const eliminarProducto = (e) => {
     e.preventDefault();
 
@@ -15,7 +16,10 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
       response => response.json()
     ).then(
       data => console.log(data)
-    ).catch(error => console.log(error));
+    ).catch((error) => {
+      console.log(error);
+      setError(error);
+    });
 
     navigate("/");
   }
@@ -36,9 +40,14 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
             <p className='card-text'>Owner: <strong>{owner}</strong></p>
             {status ? (<p className='card-text'>Stock: <strong>{stock}</strong></p>) : (<p className='card-text'>Sin Stock</p>)}
             <>
-              <form onSubmit={eliminarProducto}>
+              {error ? 
+              <p className="error">error</p>:
+              <p className="error">{error}</p>}
+
+              {/* <form onSubmit={eliminarProducto}>
                 <button type='submit' className='btn btn-danger'>Eliminar</button>
-              </form>
+              </form> */}
+
               <form onSubmit={actualizarProducto}>
                 <button type='submit' className='btn btn-primary'>Actualizar</button>
               </form>
