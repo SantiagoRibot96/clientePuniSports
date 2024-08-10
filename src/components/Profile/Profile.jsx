@@ -42,7 +42,7 @@ const Profile = () => {
           <p>Edad: {user.age}</p>
           <p>Rol: <strong>{user.rol}</strong></p>
           <button className="btn btn-primary" onClick={logout}>Cerrar sesion</button>
-          <Link href="/reset-password" type='submit'>Cambiar contraseña </Link>
+          <Link href="/reset-password">Cambiar contraseña </Link>
         </div> :
         <div>
           <p>No te encuentras logeado</p>
