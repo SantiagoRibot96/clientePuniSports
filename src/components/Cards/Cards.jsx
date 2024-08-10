@@ -7,9 +7,7 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
 
   const navigate = useNavigate();
   const { user } = useContext(SessionContext);
-  const { error, setError } = useState("");
-  
-  console.log(error);
+  const { errorMessage, setErrorMessage } = useState("");
   
   const eliminarProducto = (e) => {
     e.preventDefault();
@@ -20,7 +18,7 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
       data => console.log(data)
     ).catch((error) => {
       console.log(error);
-      setError(error);
+      setErrorMessage(error);
     });
 
     navigate("/");
@@ -42,11 +40,11 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
             <p className='card-text'>Owner: <strong>{owner}</strong></p>
             {status ? (<p className='card-text'>Stock: <strong>{stock}</strong></p>) : (<p className='card-text'>Sin Stock</p>)}
             <>
-              {error === "" ?
+              {errorMessage === "" ?
               <form onSubmit={eliminarProducto}>
                 <button type='submit' className='btn btn-danger'>Eliminar</button>
               </form>:
-              <p className="error">{error}</p>}
+              <p className="error">{errorMessage}</p>}
 
               <form onSubmit={actualizarProducto}>
                 <button type='submit' className='btn btn-primary'>Actualizar</button>
