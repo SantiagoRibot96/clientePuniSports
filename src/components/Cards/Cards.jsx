@@ -15,13 +15,13 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
     fetch(`${process.env.REACT_APP_API_URL}/products/${_id}`, {method: 'DELETE'}).then(
       response => response.json()
     ).then(
-      data => console.log(data)
+      (data) => {
+        console.log(data);
+        navigate("/");}
     ).catch((error) => {
       console.log(error);
       setErrorMessage(error);
     });
-
-    navigate("/");
   }
 
   const actualizarProducto = () => {

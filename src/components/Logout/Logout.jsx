@@ -21,12 +21,11 @@ const Logout = () => {
       if(result.ok) {
         console.log(result.message);
         updateSession(result.isLogged, "");
+        navigate('/');
       }else{
         console.log(result.error);
         updateSession(result.isLogged, "");
       }
-  
-      navigate('/');
     } catch (error) {
       console.log(error);
       setErrorMessage(error);

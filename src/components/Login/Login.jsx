@@ -34,6 +34,7 @@ const Login = () => {
         if(result.ok) {
           console.log(result.message);
           updateSession(result.isLogged, result.payload);
+          navigate('/');
         }else{
           console.log(result.error);
           updateSession(result.isLogged, "");
@@ -42,8 +43,6 @@ const Login = () => {
       console.log("nok");
       setErrorMessage(error);
     }
-
-    navigate('/');
   }
 
   const github = async (e) => {
