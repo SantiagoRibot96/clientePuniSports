@@ -28,3 +28,8 @@
 .cardOculta {
     opacity: 0.5;
 }
+
+.error {
+    color: red;
+    font-size: small;
+}

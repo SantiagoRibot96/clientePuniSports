@@ -40,13 +40,11 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
             <p className='card-text'>Owner: <strong>{owner}</strong></p>
             {status ? (<p className='card-text'>Stock: <strong>{stock}</strong></p>) : (<p className='card-text'>Sin Stock</p>)}
             <>
-              {error === "" ? 
-              <p className="error">error</p>:
-              <p className="error">{error}</p>}
-
-              {/* <form onSubmit={eliminarProducto}>
+              {error === "" ?
+              <form onSubmit={eliminarProducto}>
                 <button type='submit' className='btn btn-danger'>Eliminar</button>
-              </form> */}
+              </form>:
+              <p className="error">{error}</p>}
 
               <form onSubmit={actualizarProducto}>
                 <button type='submit' className='btn btn-primary'>Actualizar</button>
