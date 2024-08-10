@@ -9,8 +9,6 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
   const { user } = useContext(SessionContext);
   const { errorMessage, setErrorMessage } = useState("");
   
-  console.log(errorMessage);
-  
   const eliminarProducto = (e) => {
     e.preventDefault();
 
@@ -42,10 +40,10 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
             <p className='card-text'>Owner: <strong>{owner}</strong></p>
             {status ? (<p className='card-text'>Stock: <strong>{stock}</strong></p>) : (<p className='card-text'>Sin Stock</p>)}
             <>
-              {errorMessage ?
+              {!errorMessage ?
               <form onSubmit={eliminarProducto}>
                 <button type='submit' className='btn btn-danger'>Eliminar</button>
-              </form>:
+              </form> :
               <p className="error">{errorMessage}</p>}
 
               <form onSubmit={actualizarProducto}>
@@ -66,9 +64,12 @@ const Item = ({owner, thumbnail, title, price, stock, _id, description, status, 
             <p className='card-text'>Owner: {owner}</p>
             {status ? (<p className='card-text'>Stock: <strong>{stock}</strong></p>) : (<p className='card-text'>Sin Stock</p>)}
             <>
+              {!errorMessage ?
               <form onSubmit={eliminarProducto}>
-                <button type='submit' className='btn btn-danger' disabled>Eliminar</button>
-              </form>
+                <button type='submit' className='btn btn-danger'>Eliminar</button>
+              </form> :
+              <p className="error">{errorMessage}</p>}
+              
               <form onSubmit={actualizarProducto}>
                 <button type='submit' className='btn btn-primary' disabled>Actualizar</button>
               </form>
