@@ -22,7 +22,6 @@ const Users = () => {
             if(result.ok){
                 console.log(result.payload);
                 setPayload(result.payload);
-                flag = true;
             }else{
                 console.log(result.error);
                 setErrorMessage(result.error)
