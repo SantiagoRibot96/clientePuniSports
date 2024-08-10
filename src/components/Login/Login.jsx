@@ -38,6 +38,7 @@ const Login = () => {
         }else{
           console.log(result.error);
           updateSession(result.isLogged, "");
+          setErrorMessage(result.error);
         }
     } catch (error) {
       console.log("nok");
