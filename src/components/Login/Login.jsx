@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { SessionContext } from '../../context/SessionContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
 
@@ -74,11 +74,11 @@ const Login = () => {
         <label htmlFor="password">Password: </label>
         <input type="password" name='password' value={formData.password} onChange={handleChange} required />
         <button className='btn btn-primary' type='submit'>Iniciar </button>
-        <a href="/reset-password" type='submit'>Olvidaste tu contraseña? </a>
+        <Link to="/reset-password">Olvidaste tu contraseña?</Link>
       </form>
 
-      <a className='btn btn-primary' href="/registrarse">Registrarse! </a>
-      <a className='btn btn-secondary' onClick={github}>Ingresa con Github</a>
+      <Link className='btn btn-primary' to="/registrarse">Registrarse!</Link>
+      <btn className='btn btn-secondary' onClick={github}>Ingresa con Github</btn>
     </>
   )
 }
