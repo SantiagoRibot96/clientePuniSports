@@ -12,6 +12,7 @@ function MPButton({products}) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(products),
+                credentials: 'include'
             });
 
             const data = await response.json();
@@ -24,7 +25,7 @@ function MPButton({products}) {
     };
 
     return (
-        <button onClick={handlePayment} disabled={loading}>
+        <button className="btn btn-primary" onClick={handlePayment} disabled={loading}>
             {loading ? 'Loading...' : 'Pagar con MercadoPago'}
         </button>
     );
