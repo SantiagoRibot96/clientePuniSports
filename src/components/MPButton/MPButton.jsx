@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { SessionContext } from '../../context/SessionContext';
 
 function MPButton() {
     const [loading, setLoading] = useState(false);
     const [productos, setProductos] = useState([]);
-
+    const { user } = useContext(SessionContext);
+    
     const handlePayment = async () => {
         setLoading(true);
         try {
