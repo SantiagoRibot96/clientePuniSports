@@ -11,7 +11,7 @@ function MPButton({products}) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(products),
+                // body: JSON.stringify(products),
                 credentials: 'include'
             });
 
