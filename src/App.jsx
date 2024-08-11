@@ -15,6 +15,7 @@ import Ticket from './components/Ticket/Ticket';
 import NewProduct from './components/NewProduct/NewProduct';
 import UploadFiles from './components/UploadFiles/UploadFiles';
 import { ContextProvider } from './context/SessionContext';
+import MPButton from './components/MPButton/MPButton';
 
 const App = () => {  
   return (

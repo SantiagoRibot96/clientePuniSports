@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { SessionContext } from '../../context/SessionContext';
 import './Cart.css'
 import { useNavigate, Link } from "react-router-dom";
+import MPButton from "../MPButton/MPButton.jsx";
+
 const Cart = () => {
     const [productos, setProductos] = useState([]);
     const [ errorMessage, setErrorMessage ] = useState("");
@@ -53,7 +55,10 @@ const Cart = () => {
         </div>
 
         {productos.length != 0 ? 
-          <Link className="btn btn-primary" to={`/comprar/${user.cart}`}>Comprar</Link> :
+          <>
+            <Link className="btn btn-primary" to={`/comprar/${user.cart}`}>Comprar</Link>
+            <MPButton products/>
+          </> :
           <div>
             <p>No hay productos en el carrito, mira nuestras ofertas</p>
             <Link className="btn btn-primary" to="/">Ofertas</Link>
