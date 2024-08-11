@@ -57,7 +57,7 @@ const Cart = () => {
         {productos.length != 0 ? 
           <>
             <Link className="btn btn-primary" to={`/comprar/${user.cart}`}>Comprar</Link>
-            <MPButton productos/>
+            <MPButton/>
           </> :
           <div>
             <p>No hay productos en el carrito, mira nuestras ofertas</p>

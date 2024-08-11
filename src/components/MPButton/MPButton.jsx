@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function MPButton({productos}) {
+function MPButton() {
     const [loading, setLoading] = useState(false);
-    console.log(productos);
+    const [productos, setProductos] = useState([]);
+
     const handlePayment = async () => {
         setLoading(true);
         try {
@@ -11,7 +12,7 @@ function MPButton({productos}) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                // body: JSON.stringify(products),
+                body: JSON.stringify(productos),
                 credentials: 'include'
             });
 
@@ -23,6 +24,21 @@ function MPButton({productos}) {
             setLoading(false);
         }
     };
+
+    const fetchProducts = () => {
+        fetch(`${process.env.REACT_APP_API_URL}/carts/${user.cart}`).then(
+            response => response.json()
+        ).then(
+            data => {
+                setProductos(data.payload);
+            }
+        ).catch((error) => {
+            console.log(error)});
+        }
+
+    useEffect(() => {
+        fetchProducts();
+    }, []);
 
     return (
         <button className="btn btn-primary" onClick={handlePayment} disabled={loading}>
