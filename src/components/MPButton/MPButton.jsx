@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-function MPButton({products}) {
+function MPButton({productos}) {
     const [loading, setLoading] = useState(false);
-    console.log(products);
+    console.log(productos);
     const handlePayment = async () => {
         setLoading(true);
         try {
